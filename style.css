@@ -1,0 +1,240 @@
+/* Velvelyne font by Mariel Nils, Manon Van der Borght, with the contribution of Raphaël Bastide, Benjamin Dumond */
+/* https://velvetyne.fr/fonts/velvelyne/ */
+@font-face {
+    font-family: 'Velvelyne';
+    src: url('assets/Velvelyne-Bold.woff2') format('woff2'),
+         url('assets/Velvelyne-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Velvelyne';
+    src: url('assets/Velvelyne-Regular.woff2') format('woff2'),
+         url('assets/Velvelyne-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Visually hide elements withouth affecting Screen Readers*/
+h1,
+.visually-hidden {
+    position: absolute;
+    left:     -10000px;
+    top:      auto;
+    width:    1px;
+    height:   1px;
+    overflow: hidden;
+}
+
+:root {
+    ---base-fsz: 16;
+    --fsz: 16;
+    font-family: 'Velvelyne', sans-serif;
+    --base: #EBEBEB;
+    --primary: #8C3600;
+    --secondary: #D9D9D9;
+}
+
+body * {
+    font-size: calc(1rem*var(--fsz)/var(---base-fsz));
+}
+
+body {
+    background-color: var(--base);
+}
+
+.screen--initialize {
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: 30px 15px;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    --fsz: 40;
+    transition: opacity 0.3s, transform 0.5s;
+}
+
+.screen--disabled {
+    pointer-events: none;
+}
+
+.options {
+    border: var(--primary) 2px dashed;
+    border-radius: 0.7em;
+    padding: 0.5em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    box-sizing: border-box;
+}
+
+.options__item {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 0.7em;
+    background-color: var(--secondary);
+    padding: 1em 1em 1.15em 1em;
+    color: var(--primary);
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+@media (hover: hover) {
+    .options__item:hover {
+        background-color: var(--primary);
+        color: var(--base);
+    }
+}
+
+.options__item-title {
+    --fsz: 40;
+    font-weight: bold;
+    text-transform: lowercase;
+    margin-top: -0.2em;
+}
+
+.options__item-icon {
+    display: inline-block;
+    height: 1.2em;
+    width: 1.2em;
+    vertical-align: top;
+    margin-left: 0.1em;;
+}
+
+.options__item-icon * {
+    transition: stroke 0.3s;
+}
+
+@media (hover: hover) {
+    .options__item:hover .options__item-icon * {
+        stroke: var(--base)
+    }
+}
+
+.options__item-caption {
+    --fsz: 24;
+}
+
+.notice {
+    --fsz: 20;
+    color: #999999;
+    align-self: start;
+    margin-top: 0.5em;
+}
+
+.screen--dropzone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    opacity: 0;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dragging-file .screen--dropzone {
+    opacity: 1;
+}
+
+.dropzone__title {
+    color: var(--base);
+    text-transform: lowercase;
+    font-weight: bold;
+    --fsz: 40;
+}
+
+canvas {
+    cursor: grab;
+}
+
+canvas:active {
+    cursor: grabbing;
+}
+
+
+.app-started .screen--initialize {
+    opacity: 0;
+    transform: translate(0, -30px);
+}
+
+.app-started-no-transition .screen--initialize {
+    display: none
+}
+
+.screen--app {
+    background-color: var(--primary);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s 0.4s;
+    height: 100vh;
+    width: 100%;
+}
+
+.app-started .screen--app,
+.app-started-no-transition .screen--app {
+    opacity: 1;
+    pointer-events: initial;
+    visibility: visible;
+}
+
+.app-started-no-transition .screen--app {
+    transition: none;
+}
+
+.hidden { 
+    display: none;
+}
+
+.shutter-outer {
+    position: absolute;
+    bottom: calc(50% - 240px - 120px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    background: var(--base);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.shutter-inner {
+    width: 85px;
+    height: 85px;
+    background: var(--base);
+    border-radius: 100%;
+    border: 3px solid var(--primary);
+    transition: width 0.3s, height 0.3s, border-width 0.3s;
+}
+
+@media (hover: hover) {
+    .shutter-outer:hover .shutter-inner {
+        width: 75px;
+        height: 75px;
+        border-width: 7px;
+    }
+}
+
+.shutter-outer--enabled {
+    opacity: 1;
+    pointer-events: all;
+    transition: none;
+}
+

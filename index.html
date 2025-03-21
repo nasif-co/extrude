@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinscreen</title>
+    <meta name="description" content="Generate 3D models from a single flat image.">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Pinscreen: Flat images to 3D snapshots</h1>
+    <section class="screen screen--initialize" id="dragzone">
+        <nav class="options">
+            <label class="options__item" for="img-upload">
+                <hgroup class="options__item-label">
+                    <h2 class="options__item-title options__item-title--file">Drag & drop an image 
+                        <svg class="options__item-icon" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2.5" y="9.5" width="45" height="31" rx="3.5" stroke="#8C3600" stroke-width="3"/>
+                            <path d="M4 40L16.5 19.5L28 35.5L36 26L46.5 40" stroke="#8C3600" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>
+                    </h2>
+                    <p class="options__item-caption">Choose an image from your library to 3D-fy.</p>
+                </hgroup>
+                <input class="options__item-input visually-hidden" id="img-upload" type="file" accept="image/*">
+            </label>
+            <button class="options__item options__item--webcam">
+                <hgroup class="options__item-label">
+                    <h2 class="options__item-title options__item-title--webcam">Snap a picture
+                        <svg class="options__item-icon" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M45.5 12C45.5 12 48 13.4748 48 15.2941V39.2941C48 41.8931 45.8547 44 43.2083 44H6.79167C4.1453 44 2 41.8931 2 39.2941V16.7059C2 14.1069 4.14585 12 6.79222 12C15.2736 12 22.0836 12 29.3125 12" stroke="#8C3600" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="25" cy="29" r="9.5" stroke="#8C3600" stroke-width="3"/>
+                            <rect x="29.5" y="7.5" width="16" height="9" rx="3.5" stroke="#8C3600" stroke-width="3"/>
+                        </svg>
+                    </h2>
+                    <p class="options__item-caption">3D-fy the view of your webcam.</p>
+                </hgroup>
+            </button>
+        </nav>
+        <p class="notice">*images never leave your device, everything runs in your own browser :)</p>
+    </section>
+    <section class="screen screen--app" id="appcontainer">
+        <div class="shutter-outer">
+            <div class="shutter-inner"></div>
+        </div>
+    </section>
+    <section class="screen screen--dropzone">
+        <h2 class="dropzone__title">drop it anywhere :)</h2>
+    </section>
+    <script src="interface.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
