@@ -96,3 +96,22 @@ function throttle( cb, delay ) {
       setTimeout( checkStoredArgs, delay );
     };
 }
+
+function disablePropagationFromSlider() {
+    const slider = document.querySelector('input[type=range]');
+
+    slider.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (e.buttons > 0) { // if mouse button is being held down
+            e.stopPropagation();
+        }
+    });
+
+    slider.addEventListener('mouseup', (e) => {
+        e.stopPropagation();
+    });
+}
+disablePropagationFromSlider();

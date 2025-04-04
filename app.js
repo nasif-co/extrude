@@ -77,7 +77,7 @@ const p5Code = ( sketch ) => {
     };
   
     sketch.draw = () => {
-    sketch.translate(-snapshot.width/2,-snapshot.height/2,0);
+    sketch.translate(-snapshot.width/2,-snapshot.height/2, 100);
     sketch.clear();
       if(capturing) {
         snapshot.image(video, 0, 0);
@@ -89,7 +89,14 @@ const p5Code = ( sketch ) => {
         sketch.orbitControl();
         //Only render the 3D model if it is not being generated
         if(!rendering) {
-          sketch.scale(1,1, easeInOutCubic(sketch.constrain((sketch.frameCount-finishedRender)/180,  0, 1)));
+          document.querySelector('.loader').classList.remove('loading');
+          if(sketch.frameCount-finishedRender < 180) {
+            sketch.scale(1,1, easeInOutCubic(sketch.constrain((sketch.frameCount-finishedRender)/180,  0, 1)));
+          } else {
+            document.querySelector('.depth-control').classList.add('active');
+            sketch.translate(0,0, (-window.extrude.value + 1)*100);
+            sketch.scale(1,1, Number(window.extrude.value));
+          }
           sketch.texture(snapshot);
           sketch.noStroke();
           sketch.model(photogrammetry);
@@ -102,6 +109,7 @@ const p5Code = ( sketch ) => {
     async function processVideo() {
         //Set the rendering flag
         rendering = true;
+        document.querySelector('.loader').classList.add('loading');
         //Turn the image drawn to the snapshot to a data url and feed it into the model
         let depthResult = await depthEstimation(snapshot.canvas.toDataURL());
         //When we get the results back, load the pixels of the image we sent
