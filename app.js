@@ -12,7 +12,10 @@ async function loadTransformers() {
     depthEstimation = await pipeline(
         "depth-estimation", // Model task
         "onnx-community/depth-anything-v2-small",
-        {device: 'webgpu'}
+        {
+          device: 'webgpu',
+          dtype: 'fp16'
+        }
     );
 
     console.log("Transformers loaded successfully");

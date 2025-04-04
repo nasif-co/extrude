@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pinscreen</title>
+    <title>Extrude</title>
     <meta name="description" content="Generate 3D models from a single flat image.">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Pinscreen: Flat images to 3D snapshots</h1>
+    <h1>Extrude: Flat images to 3D snapshots</h1>
     <section class="screen screen--initialize" id="dragzone">
         <nav class="options">
             <label class="options__item" for="img-upload">
@@ -45,6 +45,7 @@
         <div class="shutter-outer">
             <div class="shutter-inner"></div>
         </div>
+        <p class="extruding">Extruding...</p>
     </section>
     <section class="screen screen--dropzone">
         <h2 class="dropzone__title">drop it anywhere :)</h2>
