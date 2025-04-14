@@ -434,3 +434,52 @@ input[type=range]::-moz-range-track  {
 input[type=range]:focus::-webkit-slider-runnable-track {
     background: #959595;
 }
+
+.screen--load {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    background-color: rgb(238 238 238 / 80%);
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0s 0.3s, height 0s 0.3s, width 0s 0.3s;
+}
+
+.screen--loading {
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.downloader {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: var(--base);
+    text-transform: lowercase;
+    background-color: var(--primary);
+    border-radius: 1em;
+    --fsz: 30;
+    overflow: hidden;
+    padding: 0.4em 0.8em;
+    padding-top: 0.2em;
+    z-index: 1;
+    transition: transform 0.3s, visibility 0s 0.3s;
+}
+
+.downloader span {
+    display: inline-block;
+    width: 4.5ch;
+}
+
+.screen--loading .downloader {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}

@@ -14,11 +14,12 @@ async function loadTransformers() {
         "onnx-community/depth-anything-v2-small",
         {
           device: 'webgpu',
-          dtype: 'fp16'
+          dtype: 'fp16',
+          progress_callback: logProgress
         }
     );
 
-    console.log("Transformers loaded successfully");
+      //console.log("Transformers loaded successfully");
       return;
     } catch (error) {
       console.error("Failed to load transformers.js", error);
@@ -164,3 +165,13 @@ const p5Code = ( sketch ) => {
         return number < 0.5 ? 4 * number * number * number : 1 - Math.pow(-2 * number + 2, 3) / 2;
     }
 };
+
+function logProgress(data) {
+  if(data.progress) {
+    document.querySelector('.downloader span').textContent = Math.round(data.progress) + '%';
+  }
+  
+  if(data.status == 'ready') {
+    document.querySelector('.screen--loading').classList.remove('screen--loading');
+  }
+}
