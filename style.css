@@ -182,6 +182,10 @@ canvas:active {
     width: 100%;
 }
 
+body:not(.app-started) .screen--app {
+    height: 0;
+}
+
 .app-started .screen--app,
 .app-started-no-transition .screen--app {
     opacity: 1;
