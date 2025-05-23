@@ -1,4 +1,5 @@
 let imgURL = null;
+let droppedFile = false;
 
 // A: Visitor drops a file over the window
 const dragThrottlecb = throttle( detectDragging, 100);
@@ -9,11 +10,13 @@ window.dragzone.addEventListener('dragover', function(event) {
 
 let dragEndCounter;
 function detectDragging(event) {
-    document.body.classList.add('dragging-file');
-    clearTimeout(dragEndCounter);
-    dragEndCounter = setTimeout( () => {
-        document.body.classList.remove('dragging-file');
-    }, 120);
+    if(!droppedFile) {
+        document.body.classList.add('dragging-file');
+        clearTimeout(dragEndCounter);
+        dragEndCounter = setTimeout( () => {
+            document.body.classList.remove('dragging-file');
+        }, 120);
+    }
 }
 
 window.dragzone.addEventListener('drop', function (event) {
@@ -25,6 +28,8 @@ window.dragzone.addEventListener('drop', function (event) {
                 //Skip non-image files
                 continue;
             }
+            droppedFile = true;
+            document.body.classList.remove('dragging-file');
             imgURL = URL.createObjectURL(file);
             startApp(true);
             break; // Only handle the first image
@@ -57,16 +62,19 @@ function startApp( instant = false ) {
     //Animate app screen start
     if(instant) {
         document.body.classList.add('app-started-no-transition');
+        createP5Sketch();
     }else {
         document.body.classList.add('app-started');
-        jQuery('.screen--initialize').one( 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-            document.querySelector('.screen--initialize').classList.add('hidden');
-        }
+        let transitionEndCounter;
+            jQuery('.screen--initialize').one( 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(e){
+                document.querySelector('.screen--initialize').classList.add('hidden');
+                clearTimeout(transitionEndCounter);
+                //Don't start sketch until we are absolutely ready
+                transitionEndCounter = setTimeout(createP5Sketch, 500);
+            }
         );
     }
-    createP5Sketch();
     
-
 }
 
 //Functionalities

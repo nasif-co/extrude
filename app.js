@@ -1,6 +1,16 @@
 let depthEstimation;
 loadTransformers();
 
+//Detect if WebGPU is available
+let webGPUAvailable = navigator.gpu;
+let modelOptions = {
+    dtype: 'fp16',
+    progress_callback: logProgress
+}
+if(navigator.gpu) {
+    modelOptions.device = 'webgpu';
+}
+
 async function loadTransformers() {
     try {
       const module = await import(
@@ -11,15 +21,10 @@ async function loadTransformers() {
     // Load the depth estimation model
     depthEstimation = await pipeline(
         "depth-estimation", // Model task
-        "onnx-community/depth-anything-v2-small",
-        {
-          device: 'webgpu',
-          dtype: 'fp16',
-          progress_callback: logProgress
-        }
+        "onnx-community/depth-anything-v2-small", //Pretrained model
+        modelOptions
     );
 
-      //console.log("Transformers loaded successfully");
       return;
     } catch (error) {
       console.error("Failed to load transformers.js", error);
@@ -63,14 +68,20 @@ const p5Code = ( sketch ) => {
                 snapshot.image(video, 0, 0);
                 sketch.image(snapshot, 0, 0);
                 capturing = false;
-                processVideo();
                 document.querySelector('.shutter-outer').classList.remove('shutter-outer--enabled');
-            });
+                processVideo();
+            }, {once: true});
 
         }else {
-            source.resize(640, 0);
+            if(source.height > source.width) {
+                source.resize(0, 640);
+            }else {
+                source.resize(640, 0);
+            }
             snapshot = sketch.createGraphics(source.width, source.height);
             snapshot.image(source, 0, 0);
+            sketch.translate(-snapshot.width/2,-snapshot.height/2, 100);
+            sketch.image(snapshot, 0, 0);
             processVideo();
         }
 
