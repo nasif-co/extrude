@@ -60,7 +60,11 @@ const p5Code = ( sketch ) => {
         if(imgURL == null) {
             document.querySelector('.shutter-outer').classList.add('shutter-outer--enabled');
             video = sketch.createCapture(sketch.VIDEO, {'flipped': true});
-            video.size(640, 480);
+            if(video.width > video.height) {
+              video.size(640, 480);
+            }else {
+              video.size(480, 640);
+            }
             video.hide();
             snapshot = sketch.createGraphics(video.width, video.height);
             capturing = true;
@@ -68,6 +72,7 @@ const p5Code = ( sketch ) => {
                 snapshot.image(video, 0, 0);
                 sketch.image(snapshot, 0, 0);
                 capturing = false;
+                video.remove();
                 document.querySelector('.shutter-outer').classList.remove('shutter-outer--enabled');
                 processVideo();
             }, {once: true});
@@ -118,6 +123,9 @@ const p5Code = ( sketch ) => {
       }
     };
 
+
+    let threshold = 255; //disable threshold for now
+
     async function processVideo() {
         //Set the rendering flag
         rendering = true;
@@ -146,7 +154,23 @@ const p5Code = ( sketch ) => {
             //Create the vertex as a vector and set its UV
             const voxel = sketch.createVector(x, y, z);
             photogrammetry.vertices.push(voxel);
-            photogrammetry.uvs.push(x/snapshot.width, y/snapshot.height);
+            //photogrammetry.uvs.push(x/snapshot.width, y/snapshot.height);
+
+            // Add UV coordinates
+            const above = x + (y - 1) * snapshot.width;
+            const left = (x - 1) + y * snapshot.width;
+            if( 
+                (x > 0 && y == 0 && Math.abs(depth.data[left] - z) > threshold) ||
+                ( x == 0 && y > 0 && Math.abs(depth.data[above] - z) > threshold) ||
+                (x > 0 && y > 0 && (Math.abs(depth.data[left] - z) > threshold || Math.abs(depth.data[above] - z) > threshold ) )
+              ) {
+                //Don't connect the vertex to its left and top neighbors if their z's are too different
+                photogrammetry.uvs.push(0, 0);
+                //console.log('here');
+            }else {
+              //Otherwise, do connect them by setting the corresponding UV
+              photogrammetry.uvs.push(x/snapshot.width, y/snapshot.height);
+            }
             
             //Manually set the faces of the 3D model
             //Only up to width - 1 and y - 1 because we draw the
@@ -167,6 +191,13 @@ const p5Code = ( sketch ) => {
           }
         }
         photogrammetry.computeNormals();
+
+        //Make the first pixel of the texture transparent so we can use it to
+        //set the transparent areas of the model
+        snapshot.erase(255);
+        snapshot.rect(0,0, 1,1);
+        snapshot.noErase();
+
         //End of rendering
         rendering = false;
         finishedRender = sketch.frameCount;

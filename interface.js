@@ -123,3 +123,14 @@ function disablePropagationFromSlider() {
     });
 }
 disablePropagationFromSlider();
+
+window.addEventListener('DOMContentLoaded', () => {
+    document.body.style.setProperty('--svh', `${window.innerHeight * 0.01}px`);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            document.body.style.setProperty('--svh', `${window.innerHeight * 0.01}px`);
+        }, 50);
+    });
+}, { once: true });
