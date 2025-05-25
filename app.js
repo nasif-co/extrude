@@ -92,6 +92,18 @@ const p5Code = ( sketch ) => {
         }
 
         photogrammetry = new p5.Geometry();
+
+        //Initialize restart button
+        document.querySelector('#restart').addEventListener('click', function(){
+            window.location.reload();
+        });
+
+        //Initialize download button
+        document.querySelector('#download').addEventListener('click', function(){
+            sketch.saveCanvas('snapshot.png');
+            snapshot.save('texture.jpg');
+            photogrammetry.saveObj('3Dmodel.obj');
+        });
     };
   
     sketch.draw = () => {
@@ -111,7 +123,7 @@ const p5Code = ( sketch ) => {
           if(sketch.frameCount-finishedRender < 180) {
             sketch.scale(1,1, easeInOutCubic(sketch.constrain((sketch.frameCount-finishedRender)/180,  0, 1)));
           } else {
-            document.querySelector('.depth-control').classList.add('active');
+            document.querySelector('.controls').classList.add('active');
             sketch.translate(0,0, (-window.extrude.value + 1)*100);
             sketch.scale(1,1, Number(window.extrude.value));
           }

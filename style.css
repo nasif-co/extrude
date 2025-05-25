@@ -380,36 +380,77 @@ body:not(.app-started):not(.app-started-no-transition) .screen--app {
     }
 }
 
-.depth-control { 
+.controls { 
+    display: flex;
+    gap: 15px;
+    flex-wrap: nowrap;
     position: absolute;
     z-index: 1;
     left: 50%;
-    top: 80%;
+    top: 85%;
     transform: translate(-50%, -50%) scale(0);
     visibility: hidden;
     pointer-events: none;
     transition: transform 0.3s, visibility 0s 0.3s;
 }
 
-.depth-control.active {
+.controls.active {
     visibility: visible;
     pointer-events: all;
     transform: translate(-50%, -50%) scale(1);
     transition: transform 0.3s, visibility 0s 0s;
 }
 
-.depth-control__title {
-    color: #959595;
+.controller__title {
+    color: #dbdbdb;
     --fsz: 18;
     margin-right: 0.2em;
     transform: translateY(0.1em);
     display: inline-block;
 }
 
+.controller {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.controller.depth-control {
+    align-items: start;
+}
+
+.controller button {
+    cursor: pointer;
+}
+
+@media (hover: hover) {
+    #download svg g {
+        transition: transform 0.4s;
+    }
+
+    #download:hover #png-download {
+        transform: translateY(-5px) translateX(8px);
+    }
+
+    #download:hover #obj-download {
+        transform: translateY(5px) translateX(-8px);
+    }
+
+    #restart svg{
+        transform: rotate(0deg);
+        transition: transform 0.4s;
+    }
+
+    #restart:hover svg{
+        transform: rotate(180deg);
+    }
+}
+
 input[type=range] {
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
     width: min(40vw, 200px); /* Specific width is required for Firefox. */
     background: transparent; /* Otherwise white in Chrome */
+    padding: 15px 0px;
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -432,23 +473,23 @@ input[type=range]::-ms-track {
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    border: 1px solid #c1c1c1;
+    border: 1px solid var(--primary);
     height: 25px;
     width: 25px;
     border-radius: 100%;
     background: #dbdbdb;
     cursor: pointer;
-    transform: translate( 0, -40%);
+    transform: translate( 0, -45%);
 }
 
 input[type=range]::-moz-range-thumb {
-    border: 1px solid #c1c1c1;
+    border: 1px solid var(--primary);
     height: 25px;
     width: 25px;
     border-radius: 100%;
     background: #dbdbdb;
     cursor: pointer;
-    transform: translate( 0, -40%);
+    transform: translate( 0, -45%);
 }
 
 input[type=range]::-webkit-slider-thumb {
@@ -459,22 +500,43 @@ input[type=range]::-webkit-slider-thumb {
 
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 5px;
+    height: 4px;
+    border: 1px solid var(--primary);
     cursor: pointer;
-    background: #959595;
+    background: #dbdbdb;
     border-radius: 1.3px;
 }
 
 input[type=range]::-moz-range-track  {
     width: 100%;
-    height: 5px;
+    height: 4px;
+    border: 1px solid var(--primary);
     cursor: pointer;
-    background: #959595;
+    background: #dbdbdb;
     border-radius: 1.3px;
 }
   
 input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #959595;
+    background: #dbdbdb;
+}
+
+.page {
+    fill: var(--secondary);
+    stroke: var(--primary);
+}
+
+.filename {
+    fill:var(--primary);
+}
+
+.line-icon {
+    stroke: var(--primary);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+}
+
+svg {
+    overflow: visible;
 }
 
 .screen--load {
