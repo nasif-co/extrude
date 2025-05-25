@@ -137,6 +137,24 @@ body {
     margin-top: 0.5em;
 }
 
+.notice + .notice {
+    margin-top: 0.2em;
+}
+
+.links {
+    --fsz: 20;
+    color: #999999;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}   
+
+.links a {
+    text-decoration-skip-ink: none;
+    text-decoration: underline;
+    cursor: alias;
+}
+
 .screen--dropzone {
     position: fixed;
     top: 0;
@@ -463,6 +481,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s, visibility 0s 0.3s, height 0s 0.3s, width 0s 0.3s;
+    z-index: 1;
 }
 
 .screen--loading {
@@ -487,7 +506,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     overflow: hidden;
     padding: 0.4em 0.8em;
     padding-top: 0.2em;
-    z-index: 1;
+    z-index: 2;
     transition: transform 0.3s, visibility 0s 0.3s;
     white-space: nowrap;
 }
@@ -521,7 +540,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     .options__item-caption {
         --fsz: 20;
     }
-    .notice {
+    .notice,
+    .links {
         --fsz: 18;
     }
 }
