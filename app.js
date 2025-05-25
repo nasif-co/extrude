@@ -28,6 +28,7 @@ async function loadTransformers() {
       return;
     } catch (error) {
       console.error("Failed to load transformers.js", error);
+      alert('Failed to load AI model. Reload the site or try a different device if this is a mobile phone.');
     }
 }
 
@@ -209,7 +210,7 @@ const p5Code = ( sketch ) => {
 };
 
 function logProgress(data) {
-  if(data.progress) {
+  if(data.progress && data.status == 'progress' && data.file.includes('.onnx')) {
     document.querySelector('.downloader span').textContent = Math.round(data.progress) + '%';
   }
   
