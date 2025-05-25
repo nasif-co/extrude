@@ -141,12 +141,19 @@ body {
     margin-top: 0.2em;
 }
 
+.app-started .links,
+.app-started-no-transition .links {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .links {
     --fsz: 20;
     color: #999999;
     position: absolute;
     right: 10px;
     bottom: 10px;
+    transition: opacity 0.3s;
 }   
 
 .links a {
