@@ -1,0 +1,13 @@
+This project includes the following third-party software:
+
+- transformers.js by Hugging Face
+- p5.js by the Processing Foundation
+- jQuery by the OpenJS Foundation
+
+---
+
+Extrude (c) 2025 Nasif Rincon
+https://nasif.co/
+
+Attribution is requested when using this project in derivative works or redistribution.
+Original source: https://github.com/nasif-co/extrude
