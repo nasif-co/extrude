@@ -61,7 +61,7 @@ const p5Code = ( sketch ) => {
         if(imgURL == null) {
             document.querySelector('.shutter-outer').classList.add('shutter-outer--enabled');
             video = sketch.createCapture(sketch.VIDEO, {'flipped': true});
-            if(video.width > video.height) {
+            if(window.innerWidth > video.innerHeight) {
               video.size(640, 480);
             }else {
               video.size(480*0.75, 640*0.75);
