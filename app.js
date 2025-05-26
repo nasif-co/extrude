@@ -64,7 +64,7 @@ const p5Code = ( sketch ) => {
             if(video.width > video.height) {
               video.size(640, 480);
             }else {
-              video.size(480, 640);
+              video.size(480*0.75, 640*0.75);
             }
             video.hide();
             snapshot = sketch.createGraphics(video.width, video.height);
