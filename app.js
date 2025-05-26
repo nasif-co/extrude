@@ -87,6 +87,9 @@ const p5Code = ( sketch ) => {
             snapshot = sketch.createGraphics(source.width, source.height);
             snapshot.image(source, 0, 0);
             sketch.translate(-snapshot.width/2,-snapshot.height/2, 100);
+            if (window.matchMedia("(max-width: 580px)").matches) {
+              sketch.translate(0, 0, -400);
+            }
             sketch.image(snapshot, 0, 0);
             processVideo();
         }
@@ -108,6 +111,9 @@ const p5Code = ( sketch ) => {
   
     sketch.draw = () => {
     sketch.translate(-snapshot.width/2,-snapshot.height/2, 100);
+    if (window.matchMedia("(max-width: 580px)").matches) {
+      sketch.translate(0, 0, -400);
+    }
     sketch.clear();
       if(capturing) {
         snapshot.image(video, 0, 0);
