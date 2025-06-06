@@ -28,6 +28,10 @@ window.dragzone.addEventListener('drop', function (event) {
                 //Skip non-image files
                 continue;
             }
+            if (!['image/jpeg','image/jpg', 'image/png'].includes(file.type)) {
+                    alert('Only JPG and PNG files are supported');
+                    continue;
+            }
             droppedFile = true;
             document.body.classList.remove('dragging-file');
             imgURL = URL.createObjectURL(file);
